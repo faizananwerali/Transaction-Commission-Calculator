@@ -14,6 +14,35 @@ use stdClass;
  */
 class CommissionCalculator implements CommissionCalculatorInterface
 {
+    private array $euCountries = [
+        'AT',
+        'BE',
+        'BG',
+        'CY',
+        'CZ',
+        'DE',
+        'DK',
+        'EE',
+        'ES',
+        'FI',
+        'FR',
+        'GR',
+        'HR',
+        'HU',
+        'IE',
+        'IT',
+        'LT',
+        'LU',
+        'LV',
+        'MT',
+        'NL',
+        'PO',
+        'PT',
+        'RO',
+        'SE',
+        'SI',
+        'SK',
+    ];
     private BinProviderInterface $binList;
     private CurrencyRateProviderInterface $exchangeRatesApi;
 
@@ -40,20 +69,20 @@ class CommissionCalculator implements CommissionCalculatorInterface
     public function calculateCommission(stdClass $transaction): float
     {
         $bin = $transaction->bin;
-        $amount = $transaction->amount;
+        $amount = (float)$transaction->amount;
         $currency = $transaction->currency;
 
         $country = $this->binList->getCountry($bin);
         $rate = $this->exchangeRatesApi->getRate($currency);
 
-        if ($country == 'EUR' || $rate == 0) {
-            $fixedAmount = $amount;
-        } else {
-            $fixedAmount = $this->convertCurrency($amount, $rate);
-        }
-
-        $commissionRate = $country == 'EUR' ? 0.01 : 0.02;
+        $fixedAmount = $currency == 'EUR' || $rate == 0 ? $amount : $this->convertCurrency($amount, $rate);
+        $commissionRate = $this->isEu($country) ? 0.01 : 0.02;
         return $this->roundUp($fixedAmount * $commissionRate); // commission
+    }
+
+    private function isEu($countryCode): bool
+    {
+        return in_array($countryCode, $this->euCountries);
     }
 
     /**

@@ -25,7 +25,7 @@ class CommissionCalculatorTest extends TestCase
         $row->currency = 'USD';
 
         $binlist = Mockery::mock(BinProviderInterface::class);
-        $binlist->shouldReceive('getCountry')->andReturn('EUR');
+        $binlist->shouldReceive('getCountry')->andReturn('SK');
 
         $exchangeRatesApi = Mockery::mock(CurrencyRateProviderInterface::class);
         $exchangeRatesApi->shouldReceive('getRate')->andReturn(1.20);

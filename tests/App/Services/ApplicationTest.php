@@ -42,7 +42,7 @@ class ApplicationTest extends PHPUnit\Framework\TestCase
         $argv = ['index.php', dirname(__DIR__, 1) . '/test_files/input.txt'];
 
         // Call the run method of the Application object
-        $this->expectOutputString("2\n0.93\n1.36\n2.4\n45.9\n");
+        $this->expectOutputString("1\n0.47\n1.36\n2.4\n45.89");
         $this->app->run($argv);
     }
 
