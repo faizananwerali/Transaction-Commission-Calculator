@@ -1,0 +1,29 @@
+{
+  "name": "Bob Smith",
+  "age": 45,
+  "email": "bob@example.com",
+  "address": {
+    "street": "123 Main St.",
+    "city": "New York",
+    "state": "NY",
+    "zipcode": "10001"
+  },
+  "orders": [
+    {
+      "id": "001",
+      "amount": 25.00,
+      "date": "2022-01-01"
+    },
+    {
+      "id": "002",
+      "amount": 30.00,
+      "date": "2022-01-02"
+    },
+    {
+      "id": "003",
+      "amount": 35.00,
+      "date": "2022-01-03"
+    }
+  ]
+  "total": 90.00
+}
